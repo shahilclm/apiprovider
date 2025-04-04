@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 class ProductProvider extends ChangeNotifier {
   final ApiService apiService = ApiService();
+  List<Item> hotProducts = [];
   List<Item> products = [];
   Future<void>? _productsFuture;
+  Future<void>? _hotProductsFuture;
 
   Future<void> fetchProducts() {
     _productsFuture ??= fetchProductsFromApi();
@@ -19,6 +21,21 @@ class ProductProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       throw Exception('Failed to load products: $e');
+    }
+  }
+
+  Future<void> fetchHotProducts() {
+    _hotProductsFuture ??= fetchHotProductsFromApi();
+    return _hotProductsFuture!;
+  }
+
+  Future<void> fetchHotProductsFromApi() async {
+    try {
+      final response = await apiService.fetchHotProduct();
+      hotProducts = response.map<Item>((json) => Item.fromJson(json)).toList();
+      notifyListeners();
+    } catch (e) {
+      throw Exception('Failed to load hot products: $e');
     }
   }
 }

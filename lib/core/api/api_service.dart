@@ -9,4 +9,10 @@ class ApiService {
     print(response);
     return response.data;
   }
+
+  Future<List<dynamic>> fetchHotProduct() async {
+    Response response = await diohelper.dio.get(Endpoints.icedCofee);
+    print(response);
+    return response.data;
+  }
 }

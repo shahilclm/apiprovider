@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             FutureBuilder(
-              future: productProvider.fetchProducts(),
+              future: productProvider.fetchHotProducts(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
